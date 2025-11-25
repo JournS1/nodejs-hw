@@ -1,0 +1,37 @@
+{
+  "name": "nodejs-hw",
+  "version": "1.0.0",
+  "description": "HW: minimal Express server with notes routes",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "lint": "eslint ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "pino-http": "^10.5.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "eslint": "^8.57.1",
+    "globals": "^16.5.0",
+    "nodemon": "^3.1.10",
+    "pino-pretty": "^13.1.2",
+    "prettier": "^3.6.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JournS1/nodejs-hw.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JournS1/nodejs-hw/issues"
+  },
+  "homepage": "https://github.com/JournS1/nodejs-hw#readme"
+}
