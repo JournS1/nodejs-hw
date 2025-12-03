@@ -1,4 +1,5 @@
 import { Note } from "../models/note.js";
+import createHttpError from "http-errors";
 
 export const getAllNotes = async (req, res, next) => {
   try {
@@ -9,17 +10,16 @@ export const getAllNotes = async (req, res, next) => {
   }
 };
 
-
 export const getNoteById = async (req, res, next) => {
   try {
     const { noteId } = req.params;
     const note = await Note.findById(noteId);
 
     if (!note) {
-      return res.status(404).json({ message: "Note not found" });
+      throw createHttpError(404, "Note not found");
     }
 
-    res.json(note);
+    res.status(200).json(note);
   } catch (error) {
     next(error);
   }
@@ -27,9 +27,9 @@ export const getNoteById = async (req, res, next) => {
 
 export const createNote = async (req, res, next) => {
   try {
-    const { title, content } = req.body;
+    const { title, content, tag } = req.body;
 
-    const newNote = await Note.create({ title, content });
+    const newNote = await Note.create({ title, content, tag });
 
     res.status(201).json(newNote);
   } catch (error) {
@@ -37,40 +37,34 @@ export const createNote = async (req, res, next) => {
   }
 };
 
-export const updateNoteById = async (req, res, next) => {
+export const updateNote = async (req, res, next) => {
   try {
     const { noteId } = req.params;
-    const { title, content } = req.body;
-
-    const updated = await Note.findByIdAndUpdate(
-      noteId,
-      { title, content },
-      { new: true }
-    );
+    const updated = await Note.findByIdAndUpdate(noteId, req.body, {
+      new: true,
+    });
 
     if (!updated) {
-      return res.status(404).json({ message: "Note not found" });
+      throw createHttpError(404, "Note not found");
     }
 
-    res.json(updated);
+    res.status(200).json(updated);
   } catch (error) {
     next(error);
   }
 };
 
-export const deleteNoteById = async (req, res, next) => {
+export const deleteNote = async (req, res, next) => {
   try {
     const { noteId } = req.params;
-
     const deleted = await Note.findByIdAndDelete(noteId);
 
     if (!deleted) {
-      return res.status(404).json({ message: "Note not found" });
+      throw createHttpError(404, "Note not found");
     }
 
-    res.json({ message: "Note deleted" });
+    res.status(200).json(deleted);
   } catch (error) {
     next(error);
   }
 };
-
